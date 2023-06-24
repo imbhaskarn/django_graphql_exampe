@@ -40,8 +40,13 @@ INSTALLED_APPS = [
     'graphene_django'
 ]
 
+
 GRAPHENE = {
-    "SCHEMA": "api.graphql.schema"
+    "SCHEMA": 'api.graphql.schema.schema',
+    "MIDDLEWARE": [
+        "graphql_jwt.middleware.JSONWebTokenMiddleware",
+    ],
+
 }
 
 MIDDLEWARE = [
@@ -52,6 +57,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.contrib.auth.middleware.AuthenticationMiddleware"
+]
+
+AUTHENTICATION_BACKENDS = [
+    "graphql_jwt.backends.JSONWebTokenBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -88,7 +99,6 @@ DATABASES = {
         'PORT': '3355',
     }
 }
-
 
 
 # Password validation
